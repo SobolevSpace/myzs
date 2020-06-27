@@ -51,8 +51,9 @@ def train_model(resume):
 
 
     if resume:
-        print("Resume checkpoint from: {}:".format(resume))
+
         resume_path = Path("./checkpoint/model.pt").absolute()
+        print("Resume checkpoint from: {}:".format(str(resume_path)))
         checkpoint = torch.load(resume_path, map_location=lambda storage, loc: storage)
         print(checkpoint.keys())
         encoder.load_state_dict(checkpoint["encoder"])
@@ -73,6 +74,14 @@ def train_model(resume):
 
     else:
         global_step = 0
+        optimizer = optim.Adam(
+            chain(encoder.parameters(), decoder.parameters()),
+            lr=1e-5)
+
+        # [encoder, decoder], optimizer = amp.initialize([encoder, decoder], optimizer, opt_level="O1")
+        scheduler = optim.lr_scheduler.MultiStepLR(
+            optimizer, milestones=[300000, 400000],
+            gamma=0.5)
 
 
     sdataset = SpeechDataset(
