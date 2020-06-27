@@ -62,7 +62,7 @@ python convert.py
 ```
 The output will be placed at directory “src/myzs/output/”.  
 If you want to use model from other path, please change the variable “checkpoint_path” correctly.  
-7.	Evaluation
+7.	Evaluation  
 To calculate ABX score, we need the real audio and the synthesis audio. Real audio could be found at https://download.zerospeech.com/.  
 You can also find them at my github: https://github.com/SobolevSpace/myzs  
 To calculate the similarity of synthesis audio and real audio, use below instructions:
